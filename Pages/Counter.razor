@@ -1,0 +1,145 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using System.Collections.ObjectModel
+
+<SfButton Content="addNode" OnClick="@AddNode" />
+<SfButton Content="Edit Node" OnClick="@EditNode" />
+
+<SfDiagramComponent @ref="@diagram" Nodes="@NodeCollection" Height="600px" >
+<DiagramTemplates>
+        <NodeTemplate>
+            <div class="maindiv">
+                <div>
+                      <img src="images/profile.jpg" class="image" />
+                </div>
+                <div class="header" >
+                    <div class="header1" >
+                          Daniel Tonini
+                    </div>
+                     <div id="header2">
+                           Project Lead
+                     </div>
+                </div
+            </div>
+        </NodeTemplate>
+    </DiagramTemplates>
+    </SfDiagramComponent>
+@code
+{
+    //Reference to diagram
+    SfDiagramComponent diagram;
+
+    //Defines diagram's nodes collection
+    public DiagramObjectCollection<Node> NodeCollection = new DiagramObjectCollection<Node>();
+    // public ObservableCollection<>
+    //public ObservableCollection<DiagramNode> NodeCollection = new ObservableCollection<>() { };
+
+    protected override void OnInitialized()
+    {
+        // nodes = new DiagramObjectCollection<Node>();
+        Node node = new Node()
+            {
+                ID = "group",
+                OffsetX = 200,
+                OffsetY = 200,
+                Width = 200,
+                Height = 200,
+                Shape = new TextShape()
+                {
+                    Type = NodeShapes.Text,
+                    Content = "Text Node"
+
+                    //Sets the source to the image shape
+                    // Source = "/images/profile.jpg"
+                },
+                Style = new TextStyle()
+                {
+                    TextAlign = TextAlign.Left
+                   
+                }
+
+            };
+        //        Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        //{
+        //        new ShapeAnnotation()
+        //        {
+        //            Content = "Node",
+        //            Style = new TextStyle()
+        //            {
+        //                Color = "white",
+        //            }
+        //        }
+        //    },
+        //        Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+        //    };
+
+        NodeCollection.Add(node);
+
+
+    }
+
+    private void AddNode()
+    {
+        //To draw an object once, activate draw once
+        diagram.InteractionController = DiagramInteractions.DrawOnce;
+        ////Initialize the drawing object to draw the shape
+        diagram.DrawingObject = new Node()
+            {
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                //  Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+    }
+
+    private void EditNode()
+    {
+        //diagram.BeginUpdate();
+        //NodeCollection[0].Style.Fill = "red";
+        //NodeCollection[0].Style.StrokeColor = "white";
+        diagram.EndUpdate();
+
+        NodeCollection.Remove(NodeCollection[0]);
+    }
+}
+
+<style>
+    .maindiv {
+        height: 150px;
+        width: 200px;
+        background-color: aqua
+    }
+
+    .image {
+        height: 70px;
+        width: 70px;
+        border-radius: 50px;
+        padding: 10px;
+    }
+
+    .header {
+        margin-left: 72px;
+        margin-top: -62px;
+    }
+
+    .header1 {
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+</style>

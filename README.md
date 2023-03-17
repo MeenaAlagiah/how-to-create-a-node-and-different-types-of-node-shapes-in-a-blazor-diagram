@@ -1,0 +1,2 @@
+# how-to-create-a-node-and-different-types-of-node-shapes-in-a-blazor-diagram
+A quick start Blazor project that shows how to create a node and different types of node shapes in a Blazor Diagram. This project includes a code snippet to create a node programmatically and using the drawing tool. It also includes a code snippet to create different types of node shapes like text, image, path, html template, etc. 
